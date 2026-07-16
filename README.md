@@ -5,6 +5,12 @@ TOTP codes from a hardware security key's OATH applet over NFC or USB. It is a
 thin, self-contained repo built against the upstream **Light SDK**, and it is
 laid out to drop straight into Light's tool build / review pipeline.
 
+<p align="center">
+  <img src="docs/demo.gif" alt="YubiKey tool on a Light Phone III: hold the key to the phone, read, and see live TOTP codes counting down" width="300">
+</p>
+
+<sub>Animated mockup of the flow — hold your key to the phone, read, and watch the codes refresh. Regenerate with <a href="docs/make_demo.py"><code>docs/make_demo.py</code></a>.</sub>
+
 ## Layout
 
 ```
