@@ -47,7 +47,6 @@ class YubiKeyHomeScreen(sealedActivity: SealedLightActivity) :
     override fun Content() {
         val themeColors by LightThemeController.colors.collectAsState()
         val state by viewModel.state.collectAsState()
-        val demoMode by viewModel.demoMode.collectAsState()
 
         LightTheme(colors = themeColors) {
             Column(
@@ -56,7 +55,7 @@ class YubiKeyHomeScreen(sealedActivity: SealedLightActivity) :
                     .background(LightThemeTokens.colors.background),
             ) {
                 LightTopBar(
-                    center = LightTopBarCenter.Text(if (demoMode) "YubiKey (demo)" else "YubiKey"),
+                    center = LightTopBarCenter.Text("YubiKey"),
                     modifier = Modifier.padding(bottom = 1f.gridUnitsAsDp()),
                 )
 
@@ -85,22 +84,18 @@ class YubiKeyHomeScreen(sealedActivity: SealedLightActivity) :
                     }
                 }
 
-                LightBottomBar(bottomBarButtons(state, demoMode))
+                LightBottomBar(bottomBarButtons(state))
             }
         }
     }
 
-    private fun bottomBarButtons(state: YubiKeyUiState, demoMode: Boolean): List<LightBarButton> =
+    private fun bottomBarButtons(state: YubiKeyUiState): List<LightBarButton> =
         when (state) {
             is YubiKeyUiState.Reading -> listOf(
                 LightBarButton.Text(text = "CANCEL", onClick = viewModel::cancelRead)
             )
             else -> listOf(
                 LightBarButton.Text(text = "READ", onClick = viewModel::read),
-                LightBarButton.Text(
-                    text = if (demoMode) "DEMO: ON" else "DEMO: OFF",
-                    onClick = viewModel::toggleDemoMode,
-                ),
             )
         }
 
