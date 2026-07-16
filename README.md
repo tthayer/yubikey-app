@@ -62,8 +62,27 @@ git add light-sdk && git commit -m "bump light-sdk to <ref>"
 ```
 
 > The tool currently pins `tthayer/light-sdk@feat/yubikey-app`, which carries
-> the `LightSecurityKey` OATH capability the tool depends on. Repoint the
-> submodule to `lightphone/light-sdk` once that capability lands upstream.
+> the `LightSecurityKey` OATH Kotlin API the tool depends on. Upstream
+> `lightphone/light-sdk` has the NFC/USB **permission plumbing** (PR #59) but
+> not yet the `LightSecurityKey` API itself, so the submodule can't move to
+> upstream `main` until that API lands there too.
+
+## Releases (CI)
+
+`.github/workflows/release.yml` cuts a GitHub Release on every merge to `main`:
+
+1. Derives the next version from conventional-commit messages since the last
+   tag — `feat:` → minor, `fix:` → patch, `feat!:` / `BREAKING CHANGE` → major
+   — seeded at **v0.1.0** for the first release.
+2. Syncs `tool/lighttool.toml` (`versionName` = the tag, `versionCode` = release
+   count) and commits it back to `main` with `[skip ci]`.
+3. Builds a signed release APK (`:tool:assembleRelease`, dev keystore) and
+   attaches it to a GitHub Release tagged `vX.Y.Z` with auto-generated notes.
+
+The APK is signed with the shared Light **dev** key — fine for sideloading, but
+distinct from a Light-service-signed build. Package reads use the built-in
+`GITHUB_TOKEN`; add a `GH_PACKAGES_TOKEN` repo secret if cross-org package
+access ever needs a PAT.
 
 ## Light's build & review pipeline
 
