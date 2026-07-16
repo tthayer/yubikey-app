@@ -1,8 +1,8 @@
 [tool]
 id = "com.thelightphone.yubikey"
 label = "YubiKey"
-versionCode = 2
-versionName = "0.2.0"
+versionCode = 3
+versionName = "0.2.1"
 # NFC lets the tool read a YubiKey held to the back of the phone. USB host
 # access needs no permission (see the SDK's LightSecurityKey).
 permissions = ["android.permission.NFC"]
